@@ -28,13 +28,13 @@ public class BookServiceV2 {
 
     public Mono<Book> saveBookV1(BookDto.Post dto) {
         return verifyExistIsbn(dto.getIsbn())
-                .then(bookRepository.save(bookMapper.bookPosttoBook(dto)))
+                .then(bookRepository.save(bookMapper.bookPostToBook(dto)))
                 .doOnSuccess(result -> log.info("result: {}", result));
     }
 
     public Mono<Book> saveBookV2(BookDto.Post dto) {
         log.info("hi2");
-        return bookRepository.save(bookMapper.bookPosttoBook(dto));
+        return bookRepository.save(bookMapper.bookPostToBook(dto));
     }
 
     public Mono<Book> updateBook(Book book) {

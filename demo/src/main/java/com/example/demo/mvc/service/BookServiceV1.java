@@ -33,10 +33,10 @@ public class BookServiceV1 {
 
     public Mono<Book> createV1(BookDto.Post dto){
         return verifyExistIsbn(dto.getIsbn())
-                .then(template.insert(bookMapper.bookPosttoBook(dto)));
+                .then(template.insert(bookMapper.bookPostToBook(dto)));
     }
     public Mono<Book> createV2(BookDto.Post dto){
-        return template.insert(bookMapper.bookPosttoBook(dto));
+        return template.insert(bookMapper.bookPostToBook(dto));
     }
 
     private Mono<Void> verifyExistIsbn(String isbn) {
