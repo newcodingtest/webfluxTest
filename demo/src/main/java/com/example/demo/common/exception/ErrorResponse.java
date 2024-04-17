@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 @Getter
 public class ErrorResponse {
     private LocalDateTime errorDT;
-    private ExceptionCode exceptionCode;
+    private String reason;
 
-    private ErrorResponse(LocalDateTime errorDT, ExceptionCode exceptionCode) {
+    private ErrorResponse(LocalDateTime errorDT, String reason) {
         this.errorDT = errorDT;
-        this.exceptionCode = exceptionCode;
+        this.reason = reason;
     }
 
-    public static ErrorResponse of(LocalDateTime errorDT, ExceptionCode exceptionCode) {
-        return new ErrorResponse(errorDT, exceptionCode);
+    public static ErrorResponse of(LocalDateTime errorDT, String reason) {
+        return new ErrorResponse(errorDT, reason);
     }
 }

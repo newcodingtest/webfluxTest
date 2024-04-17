@@ -29,5 +29,6 @@ public class BookValidator<T> {
         log.error(constraintViolations.toString());
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                                                 constraintViolations.toString());
+        
     }
 }

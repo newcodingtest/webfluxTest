@@ -33,7 +33,7 @@ public class BookHandler {
                 .flatMap(book -> ServerResponse.created(URI.create("/func/v1/"+book.getBookId())).build())
                 .onErrorResume(BusinessLogicException.class, error ->
                         ServerResponse.badRequest()
-                                .bodyValue(ErrorResponse.of(LocalDateTime.now(), ExceptionCode.BOOK_EXISTS )));
+                                .bodyValue(ErrorResponse.of(LocalDateTime.now(), error.getExceptionCode().getMessage())));
     }
 
     public Mono<ServerResponse> createV2(ServerRequest serverRequest){
@@ -43,7 +43,17 @@ public class BookHandler {
                 .flatMap(book -> ServerResponse.created(URI.create("/func/v2/"+book.getBookId())).build())
                 .onErrorResume(BusinessLogicException.class, error ->
                         ServerResponse.badRequest()
-                                .bodyValue(ErrorResponse.of(LocalDateTime.now(), ExceptionCode.BOOK_EXISTS )));
+                                .bodyValue(ErrorResponse.of(LocalDateTime.now(), error.getExceptionCode().getMessage())));
+    }
+
+    /**
+     * globalExceptionHandler 적용 이후 onErrorResume코드 필요없어짐
+     * */
+    public Mono<ServerResponse> createV3(ServerRequest serverRequest){
+        return serverRequest.bodyToMono(BookDto.Post.class)
+                .doOnNext(post -> validator.validate(post))
+                .flatMap(post -> bookServiceV2.saveBookV1(post))
+                .flatMap(book -> ServerResponse.created(URI.create("/func/v2/"+book.getBookId())).build());
     }
 
     public Mono<ServerResponse> get(ServerRequest serverRequest){

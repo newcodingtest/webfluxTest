@@ -17,6 +17,7 @@ public class BookRouter {
         return route()
                 .POST("/func/v1", accept(APPLICATION_JSON), handler::createV1)
                 .POST("/func/v2", accept(APPLICATION_JSON), handler::createV2)
+                .POST("/func/v3", accept(APPLICATION_JSON), handler::createV3)
                 //.PATCH()
                 .GET("/func/v1/{book-id}", handler::get)
                 .GET("/func/v2/{book-id}", handler::get)
