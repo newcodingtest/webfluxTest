@@ -1,0 +1,16 @@
+spring:
+  application:
+        name: demo
+  r2dbc:
+    url: r2dbc:h2:mem:///test
+    username: sa
+    password:
+webclient:
+  h2-console-port: 8081
+
+
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
