@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -61,11 +60,18 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
             serverWebExchange.getResponse()
                     .setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
         log.info("errorResponse :: {}, {} ", errorResponse.getReason(), errorResponse.getErrorDT());
         try {
             dataBuffer = bufferFactory.wrap(om.writeValueAsBytes(errorResponse));
         }  catch (JsonProcessingException e) {
-            bufferFactory.wrap("".getBytes());
+            log.error("json 못만들어");
+            try {
+                bufferFactory.wrap(om.writeValueAsBytes(ErrorResponse.of(LocalDateTime.now(),
+                        "ㅅㄷㄴㅅ")));
+            } catch (JsonProcessingException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
         return serverWebExchange.getResponse().writeWith(Mono.just(dataBuffer));
