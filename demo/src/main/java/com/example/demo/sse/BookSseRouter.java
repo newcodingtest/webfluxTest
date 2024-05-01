@@ -13,16 +13,17 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
-public class BookRouter {
+public class BookSseRouter {
     @Bean
-    public RouterFunction<?> routeStreamingBook(BookService bookService, BookMapper mapper){
+    public RouterFunction<?> routeStreamingBook(BookSseService bookService, BookMapper mapper){
         return route(RequestPredicates.GET("/v11/streaming-books"),
                 request -> ServerResponse
                         .ok()
                         .contentType(MediaType.TEXT_EVENT_STREAM)
                         .body(bookService
                                 .streamingBooks()
-                                .map(book -> mapper.bookToResponse(book)),
+                                .map(book -> mapper.bookToResponse(book))
+                                ,
                                 BookDto.Response.class));
     }
 }
