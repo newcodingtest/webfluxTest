@@ -8,9 +8,22 @@ spring:
 webclient:
   h2-console-port: 8081
 
+server:
+  port: 8080
 
 logging:
   level:
     org:
       springframework:
         r2dbc: DEBUG
+
+## spring-doc
+springdoc:
+  packages-to-scan: com.example.demo
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha

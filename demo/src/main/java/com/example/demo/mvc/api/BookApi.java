@@ -1,5 +1,6 @@
 package com.example.demo.mvc.api;
 
+import com.example.demo.mvc.api.swagger.BookApiSwagger;
 import com.example.demo.mvc.dto.BookDto;
 import com.example.demo.mvc.dto.BookMapper;
 import com.example.demo.mvc.service.BookServiceV2;
@@ -14,7 +15,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("mvc/book")
 @RequiredArgsConstructor
-public class BookApi {
+public class BookApi implements BookApiSwagger {
 
     private final BookServiceV1 bookServiceV1;
     private final BookServiceV2 bookServiceV2;
